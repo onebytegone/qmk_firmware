@@ -1,4 +1,5 @@
-/* Copyright 2017 REPLACE_WITH_YOUR_NAME
+/**
+ * Copyright 2020 Ethan Smith
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,14 +17,11 @@
 
 #pragma once
 
-#if defined(KEYBOARD_redox_rev1)
-#     include "rev1.h"
-#elif defined(KEYBOARD_redox_media)
-#    include "media.h"
-#endif
+/* Use I2C or Serial, not both */
+#define USE_SERIAL
+// #define USE_I2C
 
-#ifdef KEYBOARD_redox_onebytegone
-    #include "onebytegone.h"
-#endif
-
-#include "quantum.h"
+/* Select hand configuration */
+// #define MASTER_LEFT
+// #define MASTER_RIGHT
+#define EE_HANDS

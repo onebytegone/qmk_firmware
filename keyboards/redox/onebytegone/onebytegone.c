@@ -1,4 +1,5 @@
-/* Copyright 2017 REPLACE_WITH_YOUR_NAME
+/**
+ * Copyright 2020 Ethan Smith
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,16 +15,4 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
-#if defined(KEYBOARD_redox_rev1)
-#     include "rev1.h"
-#elif defined(KEYBOARD_redox_media)
-#    include "media.h"
-#endif
-
-#ifdef KEYBOARD_redox_onebytegone
-    #include "onebytegone.h"
-#endif
-
-#include "quantum.h"
+#include "redox.h"

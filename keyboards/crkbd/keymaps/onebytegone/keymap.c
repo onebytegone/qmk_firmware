@@ -11,12 +11,16 @@ extern uint8_t is_master;
 #define _LOWER 1
 #define _RAISE 2
 #define _STENO 3
+#define _MC 4
+#define _SUB 5
 
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
   LOWER,
   RAISE,
-  STENO
+  STENO,
+  MC,
+  SUB
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -39,7 +43,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LCTL, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_LEFT, KC_DOWN,   KC_UP,KC_RIGHT, XXXXXXX, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
+      KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX,     SUB,      MC,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           KC_LGUI,   LOWER,  KC_SPC,     KC_ENT,   RAISE, KC_RALT \
                                       //`--------------------------'  `--------------------------'
@@ -66,6 +70,32 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        STN_N1,  STN_N2,  STN_N3,  STN_N4,  STN_N5,  STN_N6,                       STN_N7,  STN_N8,  STN_N9,  STN_NA,  STN_NB,  STN_NC,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                             STN_A,   STN_O,   STENO,    XXXXXXX,   STN_E,  STN_U \
+                                      //`--------------------------'  `--------------------------'
+
+  ),
+
+  [_MC] = LAYOUT( \
+  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
+         KC_1,    KC_2, XXXXXXX,    KC_W,    KC_E, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+         KC_3, KC_LSFT,    KC_A,    KC_S,    KC_D,    KC_F,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+         KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
+  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
+                                          KC_LCTL, KC_LSFT,  KC_SPC,    XXXXXXX, XXXXXXX, XXXXXXX \
+                                      //`--------------------------'  `--------------------------'
+
+  ),
+
+  [_SUB] = LAYOUT( \
+  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
+         KC_1,    KC_2,    KC_E,    KC_W,  KC_TAB,    KC_T,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+         KC_3,  KC_ESC,    KC_A,    KC_S,    KC_D,    KC_F,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+         KC_4,    KC_5,    KC_Q,  KC_F11,    KC_R,    KC_X,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
+  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
+                                             KC_C, KC_LSFT,  KC_SPC,    XXXXXXX, XXXXXXX, XXXXXXX \
                                       //`--------------------------'  `--------------------------'
 
   )
@@ -122,6 +152,12 @@ void matrix_render_user(struct CharacterMatrix *matrix) {
         break;
       case 1 << _STENO | _QWERTY:
         matrix_write_ln(matrix, "Layer: Steno");
+        break;
+      case 1 << _MC | _QWERTY:
+        matrix_write_ln(matrix, "Layer: Minecraft");
+        break;
+      case 1 << _SUB | _QWERTY:
+        matrix_write_ln(matrix, "Layer: Subnautica");
         break;
       default:
         matrix_write_ln(matrix, "Layer: Unknown");
@@ -182,6 +218,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case STENO:
       if (record->event.pressed) {
         layer_invert(_STENO);
+      }
+      return false;
+    case MC:
+      if (record->event.pressed) {
+        layer_invert(_MC);
+      }
+      return false;
+    case SUB:
+      if (record->event.pressed) {
+        layer_invert(_SUB);
       }
       return false;
   }

@@ -13,6 +13,8 @@ extern uint8_t is_master;
 #define _STENO 3
 #define _MC 4
 #define _SUB 5
+#define _P0 6
+#define _P1 7
 
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
@@ -20,7 +22,9 @@ enum custom_keycodes {
   RAISE,
   STENO,
   MC,
-  SUB
+  SUB,
+  P0,
+  P1
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -43,7 +47,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LCTL, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_LEFT, KC_DOWN,   KC_UP,KC_RIGHT, XXXXXXX, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX,     SUB,      MC,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
+      KC_LSFT, XXXXXXX, XXXXXXX,      P0,     SUB,      MC,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           KC_LGUI,   LOWER,  KC_SPC,     KC_ENT,   RAISE, KC_RALT \
                                       //`--------------------------'  `--------------------------'
@@ -78,7 +82,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
          KC_1,    KC_2, XXXXXXX,    KC_W,    KC_E, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-         KC_3, KC_LSFT,    KC_A,    KC_S,    KC_D,    KC_F,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
+         KC_3,  KC_ESC,    KC_A,    KC_S,    KC_D,    KC_F,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
          KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
@@ -96,6 +100,32 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
          KC_4,    KC_5,    KC_Q,  KC_F11,    KC_R,    KC_X,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                              KC_C, KC_LSFT,  KC_SPC,    XXXXXXX, XXXXXXX, XXXXXXX \
+                                      //`--------------------------'  `--------------------------'
+
+  ),
+
+  [_P0] = LAYOUT( \
+  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
+         KC_1,    KC_2,OSL(_P1),    KC_W,    KC_E,    KC_I,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+         KC_3,  KC_ESC,    KC_A,    KC_S,    KC_D,    KC_F,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+         KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
+  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
+                                          KC_LCTL, KC_LSFT,  KC_SPC,    XXXXXXX, XXXXXXX, XXXXXXX \
+                                      //`--------------------------'  `--------------------------'
+
+  ),
+
+  [_P1] = LAYOUT( \
+  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
+         KC_M, XXXXXXX, XXXXXXX,   KC_UP,    KC_R,    KC_V,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+         KC_N, XXXXXXX, XXXXXXX, KC_DOWN, XXXXXXX,    KC_G,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    KC_B,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
+  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
+                                          XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX \
                                       //`--------------------------'  `--------------------------'
 
   )
@@ -158,6 +188,9 @@ void matrix_render_user(struct CharacterMatrix *matrix) {
         break;
       case 1 << _SUB | _QWERTY:
         matrix_write_ln(matrix, "Layer: Subnautica");
+        break;
+      case 1 << _P0 | _QWERTY:
+        matrix_write_ln(matrix, "Layer: Pixelmon");
         break;
       default:
         matrix_write_ln(matrix, "Layer: Unknown");
@@ -228,6 +261,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case SUB:
       if (record->event.pressed) {
         layer_invert(_SUB);
+      }
+      return false;
+    case P0:
+      if (record->event.pressed) {
+        layer_invert(_P0);
       }
       return false;
   }

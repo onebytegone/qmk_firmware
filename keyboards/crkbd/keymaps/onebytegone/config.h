@@ -24,9 +24,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 /* Select hand configuration */
 
-#define MASTER_LEFT
+// #define MASTER_LEFT
 // #define MASTER_RIGHT
-// #define EE_HANDS
+
+// CMD: sudo avrdude -p atmega32u4 -P "$(ls /dev/cu.usbmodem*)" -c avr109 -U eeprom:w:./quantum/split_common/eeprom-lefthand.eep
+#define EE_HANDS
 
 #define USE_SERIAL_PD2
 

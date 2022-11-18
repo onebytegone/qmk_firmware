@@ -43,10 +43,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define L_LOWER 1
 #define L_RAISE 2
 #define L_ADJUST 3
-#define L_MC 4
+#define L_GAME 4
 
 enum custom_keycodes {
-  MC = SAFE_RANGE,
+  GAME = SAFE_RANGE,
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -93,21 +93,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
        KC_F12, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      MAC_BOL, MAC_EOD, MAC_BOD, MAC_EOL, XXXXXXX, KC_VOLD,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______,      MC, XXXXXXX, XXXXXXX, XXXXXXX, EEP_RST,                      MAC_BOW, MAC_EOW, KC_MPRV ,KC_MNXT ,KC_MPLY, KC_MUTE,
+      _______,    GAME, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      MAC_BOW, MAC_EOW, KC_MPRV ,KC_MNXT ,KC_MPLY, KC_MUTE,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           _______, _______, XXXXXXX,    XXXXXXX, _______, _______
                                       //`--------------------------'  `--------------------------'
   ),
 
-  [L_MC] = LAYOUT( \
+  [L_GAME] = LAYOUT( \
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-         KC_1,    KC_2,    KC_Q,    KC_W,    KC_E,    KC_R,                         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,     MC,\
+         KC_1,    KC_2,    KC_Q,    KC_W,    KC_E,    KC_R,                         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    GAME,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
          KC_3,  KC_ESC,    KC_A,    KC_S,    KC_D,    KC_F,                         KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN,    KC_Z,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-         KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,    KC_X,
+         KC_4,    KC_5,    KC_Z,    KC_X,    KC_C,    KC_V,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,    KC_X,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_LCTL, KC_LSFT,  KC_SPC,       KC_C,    KC_V,    KC_B \
+                                          KC_LCTL, KC_LSFT,  KC_SPC,       KC_T,    KC_G,    KC_B \
                                       //`--------------------------'  `--------------------------'
 
   )
@@ -141,8 +141,8 @@ void oled_render_layer_state(void) {
         case L_ADJUST:
             oled_write_ln_P(PSTR("Adjust"), false);
             break;
-        case L_MC:
-            oled_write_ln_P(PSTR("Minecraft"), false);
+        case L_GAME:
+            oled_write_ln_P(PSTR("Game"), false);
             break;
     }
 
@@ -158,9 +158,9 @@ void oled_task_user(void) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
-    case MC:
+    case GAME:
       if (record->event.pressed) {
-        layer_invert(L_MC);
+        layer_invert(L_GAME);
       }
       return false;
   }

@@ -1,0 +1,18 @@
+# MCU name
+MCU = RP2040
+# Bootloader selection
+BOOTLOADER = rp2040
+
+SERIAL_DRIVER = vendor
+
+SPLIT_KEYBOARD = yes
+SWAP_HANDS_ENABLE = yes
+ENCODER_ENABLE = yes
+BOOTMAGIC_ENABLE = yes
+EXTRAKEY_ENABLE = yes # Audio control and System control
+NKRO_ENABLE = yes
+KEY_LOCK_ENABLE = yes
+
+RGB_MATRIX_ENABLE = yes
+RGB_MATRIX_DRIVER = ws2812
+WS2812_DRIVER = vendor
